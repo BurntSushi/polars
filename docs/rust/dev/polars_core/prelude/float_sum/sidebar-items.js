@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":["f32","f64"]};

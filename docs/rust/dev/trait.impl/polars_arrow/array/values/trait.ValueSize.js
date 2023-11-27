@@ -1,0 +1,3 @@
+(function() {var implementors = {
+"polars_core":[["impl ValueSize for <a class=\"type\" href=\"polars_core/datatypes/type.BinaryChunked.html\" title=\"type polars_core::datatypes::BinaryChunked\">BinaryChunked</a>"],["impl ValueSize for <a class=\"type\" href=\"polars_core/datatypes/type.Utf8Chunked.html\" title=\"type polars_core::datatypes::Utf8Chunked\">Utf8Chunked</a>"],["impl ValueSize for <a class=\"type\" href=\"polars_core/datatypes/type.ListChunked.html\" title=\"type polars_core::datatypes::ListChunked\">ListChunked</a>"]]
+};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["IpcCompression"],"struct":["BatchedWriter","IpcReader","IpcStreamReader","IpcStreamWriter","IpcStreamWriterOption","IpcWriter","IpcWriterOption"]};
