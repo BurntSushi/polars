@@ -961,7 +961,6 @@ naive plan: (run LazyFrame.explain(optimized=True) to see the optimized plan)
         --------
         >>> def cast_str_to_int(data, col_name):
         ...     return data.with_columns(pl.col(col_name).cast(pl.Int64))
-        ...
         >>> lf = pl.LazyFrame(
         ...     {
         ...         "a": [1, 2, 3, 4],
@@ -1749,9 +1748,7 @@ naive plan: (run LazyFrame.explain(optimized=True) to see the optimized plan)
 
         Collect in streaming mode
 
-        >>> lf.group_by("a").agg(pl.all().sum()).collect(
-        ...     streaming=True
-        ... )  # doctest: +SKIP
+        >>> lf.group_by("a").agg(pl.all().sum()).collect(streaming=True)  # doctest: +SKIP
         shape: (3, 3)
         ┌─────┬─────┬─────┐
         │ a   ┆ b   ┆ c   │
@@ -1902,11 +1899,8 @@ naive plan: (run LazyFrame.explain(optimized=True) to see the optimized plan)
         ... )
         >>> async def main():
         ...     return await (
-        ...         lf.group_by("a", maintain_order=True)
-        ...         .agg(pl.all().sum())
-        ...         .collect_async()
+        ...         lf.group_by("a", maintain_order=True).agg(pl.all().sum()).collect_async()
         ...     )
-        ...
         >>> asyncio.run(main())
         shape: (3, 3)
         ┌─────┬─────┬─────┐
@@ -2863,9 +2857,7 @@ naive plan: (run LazyFrame.explain(optimized=True) to see the optimized plan)
 
         Use keyword arguments to easily name your expression inputs.
 
-        >>> lf.select(
-        ...     threshold=pl.when(pl.col("foo") > 2).then(10).otherwise(0)
-        ... ).collect()
+        >>> lf.select(threshold=pl.when(pl.col("foo") > 2).then(10).otherwise(0)).collect()
         shape: (3, 1)
         ┌───────────┐
         │ threshold │
@@ -2884,7 +2876,6 @@ naive plan: (run LazyFrame.explain(optimized=True) to see the optimized plan)
         ...     lf.select(
         ...         is_odd=(pl.col(pl.INTEGER_DTYPES) % 2).name.suffix("_is_odd"),
         ...     ).collect()
-        ...
         shape: (3, 1)
         ┌───────────┐
         │ is_odd    │
@@ -3014,9 +3005,7 @@ naive plan: (run LazyFrame.explain(optimized=True) to see the optimized plan)
         Or use positional arguments to group by multiple columns in the same way.
         Expressions are also accepted.
 
-        >>> lf.group_by("a", pl.col("b") // 2).agg(
-        ...     pl.col("c").mean()
-        ... ).collect()  # doctest: +SKIP
+        >>> lf.group_by("a", pl.col("b") // 2).agg(pl.col("c").mean()).collect()  # doctest: +SKIP
         shape: (3, 3)
         ┌─────┬─────┬─────┐
         │ a   ┆ b   ┆ c   │
@@ -3367,9 +3356,7 @@ naive plan: (run LazyFrame.explain(optimized=True) to see the optimized plan)
 
         Group by windows of 1 hour starting at 2021-12-16 00:00:00.
 
-        >>> lf.group_by_dynamic("time", every="1h", closed="right").agg(
-        ...     pl.col("n")
-        ... ).collect()
+        >>> lf.group_by_dynamic("time", every="1h", closed="right").agg(pl.col("n")).collect()
         shape: (4, 2)
         ┌─────────────────────┬───────────┐
         │ time                ┆ n         │
@@ -3384,9 +3371,9 @@ naive plan: (run LazyFrame.explain(optimized=True) to see the optimized plan)
 
         The window boundaries can also be added to the aggregation result
 
-        >>> lf.group_by_dynamic(
-        ...     "time", every="1h", include_boundaries=True, closed="right"
-        ... ).agg(pl.col("n").mean()).collect()
+        >>> lf.group_by_dynamic("time", every="1h", include_boundaries=True, closed="right").agg(
+        ...     pl.col("n").mean()
+        ... ).collect()
         shape: (4, 4)
         ┌─────────────────────┬─────────────────────┬─────────────────────┬─────┐
         │ _lower_boundary     ┆ _upper_boundary     ┆ time                ┆ n   │
@@ -3402,9 +3389,7 @@ naive plan: (run LazyFrame.explain(optimized=True) to see the optimized plan)
         When closed="left", the window excludes the right end of interval:
         [lower_bound, upper_bound)
 
-        >>> lf.group_by_dynamic("time", every="1h", closed="left").agg(
-        ...     pl.col("n")
-        ... ).collect()
+        >>> lf.group_by_dynamic("time", every="1h", closed="left").agg(pl.col("n")).collect()
         shape: (4, 2)
         ┌─────────────────────┬───────────┐
         │ time                ┆ n         │
@@ -3419,9 +3404,7 @@ naive plan: (run LazyFrame.explain(optimized=True) to see the optimized plan)
 
         When closed="both" the time values at the window boundaries belong to 2 groups.
 
-        >>> lf.group_by_dynamic("time", every="1h", closed="both").agg(
-        ...     pl.col("n")
-        ... ).collect()
+        >>> lf.group_by_dynamic("time", every="1h", closed="both").agg(pl.col("n")).collect()
         shape: (5, 2)
         ┌─────────────────────┬───────────┐
         │ time                ┆ n         │
@@ -4035,7 +4018,6 @@ naive plan: (run LazyFrame.explain(optimized=True) to see the optimized plan)
         ...     lf.drop("c").with_columns(
         ...         diffs=pl.col(["a", "b"]).diff().name.suffix("_diff"),
         ...     ).collect()
-        ...
         shape: (4, 3)
         ┌─────┬──────┬─────────────┐
         │ a   ┆ b    ┆ diffs       │
@@ -4112,9 +4094,7 @@ naive plan: (run LazyFrame.explain(optimized=True) to see the optimized plan)
         --------
         >>> lf = pl.LazyFrame({"a": [1, 2, 3], "b": ["a", "c", None]})
         >>> lf_other = pl.LazyFrame({"c": ["foo", "ham"]})
-        >>> lf.with_context(lf_other).select(
-        ...     pl.col("b") + pl.col("c").first()
-        ... ).collect()
+        >>> lf.with_context(lf_other).select(pl.col("b") + pl.col("c").first()).collect()
         shape: (3, 1)
         ┌──────┐
         │ b    │
@@ -4128,15 +4108,9 @@ naive plan: (run LazyFrame.explain(optimized=True) to see the optimized plan)
 
         Fill nulls with the median from another DataFrame:
 
-        >>> train_lf = pl.LazyFrame(
-        ...     {"feature_0": [-1.0, 0, 1], "feature_1": [-1.0, 0, 1]}
-        ... )
-        >>> test_lf = pl.LazyFrame(
-        ...     {"feature_0": [-1.0, None, 1], "feature_1": [-1.0, 0, 1]}
-        ... )
-        >>> test_lf.with_context(
-        ...     train_lf.select(pl.all().name.suffix("_train"))
-        ... ).select(
+        >>> train_lf = pl.LazyFrame({"feature_0": [-1.0, 0, 1], "feature_1": [-1.0, 0, 1]})
+        >>> test_lf = pl.LazyFrame({"feature_0": [-1.0, None, 1], "feature_1": [-1.0, 0, 1]})
+        >>> test_lf.with_context(train_lf.select(pl.all().name.suffix("_train"))).select(
         ...     pl.col("feature_0").fill_null(pl.col("feature_0_train").median())
         ... ).collect()
         shape: (3, 1)
@@ -5655,9 +5629,7 @@ naive plan: (run LazyFrame.explain(optimized=True) to see the optimized plan)
 
         Examples
         --------
-        >>> df0 = pl.LazyFrame(
-        ...     {"name": ["steve", "elise", "bob"], "age": [42, 44, 18]}
-        ... ).sort("age")
+        >>> df0 = pl.LazyFrame({"name": ["steve", "elise", "bob"], "age": [42, 44, 18]}).sort("age")
         >>> df0.collect()
         shape: (3, 2)
         ┌───────┬─────┐
@@ -5841,9 +5813,7 @@ naive plan: (run LazyFrame.explain(optimized=True) to see the optimized plan)
         Update `df` values including null values in `new_df`, using an outer join
         strategy that defines explicit join columns in each frame:
 
-        >>> lf.update(
-        ...     new_lf, left_on="A", right_on="C", how="outer", include_nulls=True
-        ... ).collect()
+        >>> lf.update(new_lf, left_on="A", right_on="C", how="outer", include_nulls=True).collect()
         shape: (5, 2)
         ┌─────┬──────┐
         │ A   ┆ B    │

@@ -632,9 +632,7 @@ class Array(NestedType):
 
         Examples
         --------
-        >>> s = pl.Series(
-        ...     "a", [[1, 2], [4, 3]], dtype=pl.Array(inner=pl.Int64, width=2)
-        ... )
+        >>> s = pl.Series("a", [[1, 2], [4, 3]], dtype=pl.Array(inner=pl.Int64, width=2))
         >>> s
         shape: (2,)
         Series: 'a' [array[i64, 2]]

@@ -81,9 +81,7 @@ def scan_iceberg(
     ...     "s3.access-key-id": "THE_AWS_ACCESS_KEY_ID",
     ...     "s3.secret-access-key": "THE_AWS_SECRET_ACCESS_KEY",
     ... }
-    >>> pl.scan_iceberg(
-    ...     table_path, storage_options=storage_options
-    ... ).collect()  # doctest: +SKIP
+    >>> pl.scan_iceberg(table_path, storage_options=storage_options).collect()  # doctest: +SKIP
 
     Creates a scan for an Iceberg table from Azure.
     Supported options for Azure are available `here
@@ -100,9 +98,7 @@ def scan_iceberg(
     ...     "adlfs.account-name": "AZURE_STORAGE_ACCOUNT_NAME",
     ...     "adlfs.account-key": "AZURE_STORAGE_ACCOUNT_KEY",
     ... }
-    >>> pl.scan_iceberg(
-    ...     table_path, storage_options=storage_options
-    ... ).collect()  # doctest: +SKIP
+    >>> pl.scan_iceberg(table_path, storage_options=storage_options).collect()  # doctest: +SKIP
 
     Creates a scan for an Iceberg table from Google Cloud Storage.
     Supported options for GCS are available `here
@@ -113,9 +109,7 @@ def scan_iceberg(
     ...     "gcs.project-id": "my-gcp-project",
     ...     "gcs.oauth.token": "ya29.dr.AfM...",
     ... }
-    >>> pl.scan_iceberg(
-    ...     table_path, storage_options=storage_options
-    ... ).collect()  # doctest: +SKIP
+    >>> pl.scan_iceberg(table_path, storage_options=storage_options).collect()  # doctest: +SKIP
 
     Creates a scan for an Iceberg table with additional options.
     In the below example, `without_files` option is used which loads the table without
@@ -123,9 +117,7 @@ def scan_iceberg(
 
     >>> table_path = "/path/to/iceberg-table/metadata.json"
     >>> storage_options = {"py-io-impl": "pyiceberg.io.fsspec.FsspecFileIO"}
-    >>> pl.scan_iceberg(
-    ...     table_path, storage_options=storage_options
-    ... ).collect()  # doctest: +SKIP
+    >>> pl.scan_iceberg(table_path, storage_options=storage_options).collect()  # doctest: +SKIP
 
     """
     from pyiceberg.io.pyarrow import schema_to_pyarrow

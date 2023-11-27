@@ -341,9 +341,7 @@ class SQLContext(Generic[FrameType]):
 
         Query using the register variable/frame names
 
-        >>> ctx.execute(
-        ...     "SELECT a, b, c FROM df1 LEFT JOIN df2 USING (a) ORDER BY a DESC"
-        ... ).collect()
+        >>> ctx.execute("SELECT a, b, c FROM df1 LEFT JOIN df2 USING (a) ORDER BY a DESC").collect()
         shape: (3, 3)
         ┌─────┬──────┬──────┐
         │ a   ┆ b    ┆ c    │
@@ -430,7 +428,6 @@ class SQLContext(Generic[FrameType]):
         >>> # register one frame at construction time, and the other two in-scope
         >>> with pl.SQLContext(tbl0=df0) as ctx:
         ...     ctx.register_many(tbl1=df1, tbl2=df2).tables()
-        ...
         ['tbl0', 'tbl1', 'tbl2']
 
         After scope exit, none of the tables registered in-scope remain:

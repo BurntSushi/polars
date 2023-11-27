@@ -129,9 +129,7 @@ class ExprStructNameSpace:
 
         Rename fields:
 
-        >>> df = df.select(
-        ...     pl.col("struct_col").struct.rename_fields(["www", "xxx", "yyy", "zzz"])
-        ... )
+        >>> df = df.select(pl.col("struct_col").struct.rename_fields(["www", "xxx", "yyy", "zzz"]))
         >>> df.unnest("struct_col")
         shape: (2, 4)
         ┌─────┬─────┬──────┬───────────┐

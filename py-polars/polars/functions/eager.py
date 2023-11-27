@@ -324,9 +324,7 @@ def align_frames(
 
     Align frames by the "dt" column:
 
-    >>> af1, af2, af3 = pl.align_frames(
-    ...     df1, df2, df3, on="dt"
-    ... )  # doctest: +IGNORE_RESULT
+    >>> af1, af2, af3 = pl.align_frames(df1, df2, df3, on="dt")  # doctest: +IGNORE_RESULT
     #
     # df1                              df2                              df3
     # shape: (3, 3)                    shape: (3, 3)                    shape: (3, 3)

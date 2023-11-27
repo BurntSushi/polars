@@ -252,7 +252,6 @@ def duration(
     ...         (pl.col("dt") + pl.duration(milliseconds="add")).alias("add_millis"),
     ...         (pl.col("dt") + pl.duration(hours="add")).alias("add_hours"),
     ...     )
-    ...
     shape: (2, 5)
     ┌─────────────────────┬─────────────────────┬─────────────────────┬─────────────────────────┬─────────────────────┐
     │ add_weeks           ┆ add_days            ┆ add_seconds         ┆ add_millis              ┆ add_hours           │
@@ -267,17 +266,10 @@ def duration(
 
     >>> with pl.Config(tbl_width_chars=120):
     ...     df.select(
-    ...         add_calendar_days=pl.col("dt").dt.offset_by(
-    ...             pl.format("{}d", pl.col("add"))
-    ...         ),
-    ...         add_calendar_months=pl.col("dt").dt.offset_by(
-    ...             pl.format("{}mo", pl.col("add"))
-    ...         ),
-    ...         add_calendar_years=pl.col("dt").dt.offset_by(
-    ...             pl.format("{}y", pl.col("add"))
-    ...         ),
+    ...         add_calendar_days=pl.col("dt").dt.offset_by(pl.format("{}d", pl.col("add"))),
+    ...         add_calendar_months=pl.col("dt").dt.offset_by(pl.format("{}mo", pl.col("add"))),
+    ...         add_calendar_years=pl.col("dt").dt.offset_by(pl.format("{}y", pl.col("add"))),
     ...     )
-    ...
     shape: (2, 3)
     ┌─────────────────────┬─────────────────────┬─────────────────────┐
     │ add_calendar_days   ┆ add_calendar_months ┆ add_calendar_years  │
@@ -343,9 +335,7 @@ def concat_list(exprs: IntoExpr | Iterable[IntoExpr], *more_exprs: IntoExpr) -> 
 
     >>> df = pl.DataFrame({"A": [1.0, 2.0, 9.0, 2.0, 13.0]})
     >>> df = df.select([pl.col("A").shift(i).alias(f"A_lag_{i}") for i in range(3)])
-    >>> df.select(
-    ...     pl.concat_list([f"A_lag_{i}" for i in range(3)][::-1]).alias("A_rolling")
-    ... )
+    >>> df.select(pl.concat_list([f"A_lag_{i}" for i in range(3)][::-1]).alias("A_rolling"))
     shape: (5, 1)
     ┌───────────────────┐
     │ A_rolling         │

@@ -143,9 +143,7 @@ class ExprBinaryNameSpace:
         >>> colors.select(
         ...     "name",
         ...     pl.col("code").bin.starts_with(b"\xff").alias("starts_with_lit"),
-        ...     pl.col("code")
-        ...     .bin.starts_with(pl.col("prefix"))
-        ...     .alias("starts_with_expr"),
+        ...     pl.col("code").bin.starts_with(pl.col("prefix")).alias("starts_with_expr"),
         ... )
         shape: (3, 3)
         ┌────────┬─────────────────┬──────────────────┐

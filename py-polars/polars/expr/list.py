@@ -600,9 +600,7 @@ class ExprListNameSpace:
         │ ["x", "y"]      ┆ x y   │
         └─────────────────┴───────┘
 
-        >>> df = pl.DataFrame(
-        ...     {"s": [["a", "b", "c"], ["x", "y"]], "separator": ["*", "_"]}
-        ... )
+        >>> df = pl.DataFrame({"s": [["a", "b", "c"], ["x", "y"]], "separator": ["*", "_"]})
         >>> df.with_columns(join=pl.col("s").list.join(pl.col("separator")))
         shape: (2, 3)
         ┌─────────────────┬───────────┬───────┐
@@ -1008,9 +1006,7 @@ class ExprListNameSpace:
         Convert list to struct with default field name assignment:
 
         >>> df = pl.DataFrame({"n": [[0, 1], [0, 1, 2]]})
-        >>> df.with_columns(
-        ...     struct=pl.col("n").list.to_struct()
-        ... )  # doctest: +IGNORE_RESULT
+        >>> df.with_columns(struct=pl.col("n").list.to_struct())  # doctest: +IGNORE_RESULT
         shape: (2, 2)
         ┌───────────┬───────────┐
         │ n         ┆ struct    │
@@ -1040,16 +1036,12 @@ class ExprListNameSpace:
         Convert list to struct with field name assignment by function/index:
 
         >>> df = pl.DataFrame({"n": [[0, 1], [2, 3]]})
-        >>> df.select(pl.col("n").list.to_struct(fields=lambda idx: f"n{idx}")).rows(
-        ...     named=True
-        ... )
+        >>> df.select(pl.col("n").list.to_struct(fields=lambda idx: f"n{idx}")).rows(named=True)
         [{'n': {'n0': 0, 'n1': 1}}, {'n': {'n0': 2, 'n1': 3}}]
 
         Convert list to struct with field name assignment by index from a list of names:
 
-        >>> df.select(pl.col("n").list.to_struct(fields=["one", "two"])).rows(
-        ...     named=True
-        ... )
+        >>> df.select(pl.col("n").list.to_struct(fields=["one", "two"])).rows(named=True)
         [{'n': {'one': 0, 'two': 1}}, {'n': {'one': 2, 'two': 3}}]
 
         """
@@ -1082,9 +1074,7 @@ class ExprListNameSpace:
         Examples
         --------
         >>> df = pl.DataFrame({"a": [1, 8, 3], "b": [4, 5, 2]})
-        >>> df.with_columns(
-        ...     rank=pl.concat_list("a", "b").list.eval(pl.element().rank())
-        ... )
+        >>> df.with_columns(rank=pl.concat_list("a", "b").list.eval(pl.element().rank()))
         shape: (3, 3)
         ┌─────┬─────┬────────────┐
         │ a   ┆ b   ┆ rank       │
@@ -1116,9 +1106,7 @@ class ExprListNameSpace:
         ...         "b": [[2, 3, 4], [3], [3, 4, None], [6, 8]],
         ...     }
         ... )
-        >>> df.with_columns(
-        ...     union=pl.col("a").list.set_union("b")
-        ... )  # doctest: +IGNORE_RESULT
+        >>> df.with_columns(union=pl.col("a").list.set_union("b"))  # doctest: +IGNORE_RESULT
         shape: (4, 3)
         ┌───────────┬──────────────┬───────────────┐
         │ a         ┆ b            ┆ union         │
