@@ -152,9 +152,7 @@ class ExprDateTimeNameSpace:
         >>> df = pl.datetime_range(
         ...     datetime(2001, 1, 1), datetime(2001, 1, 1, 1), "10m", eager=True
         ... ).to_frame()
-        >>> df.select(
-        ...     "datetime", pl.col("datetime").dt.truncate("30m").alias("truncate")
-        ... )
+        >>> df.select("datetime", pl.col("datetime").dt.truncate("30m").alias("truncate"))
         shape: (7, 2)
         ┌─────────────────────┬─────────────────────┐
         │ datetime            ┆ truncate            │
@@ -418,9 +416,7 @@ class ExprDateTimeNameSpace:
         ...     }
         ... )
         >>> df.with_columns(
-        ...     pl.col("datetime")
-        ...     .dt.to_string("%Y/%m/%d %H:%M:%S")
-        ...     .alias("datetime_string")
+        ...     pl.col("datetime").dt.to_string("%Y/%m/%d %H:%M:%S").alias("datetime_string")
         ... )
         shape: (3, 2)
         ┌─────────────────────┬─────────────────────┐
@@ -469,9 +465,7 @@ class ExprDateTimeNameSpace:
         ...     }
         ... )
         >>> df.with_columns(
-        ...     pl.col("datetime")
-        ...     .dt.strftime("%Y/%m/%d %H:%M:%S")
-        ...     .alias("datetime_string")
+        ...     pl.col("datetime").dt.strftime("%Y/%m/%d %H:%M:%S").alias("datetime_string")
         ... )
         shape: (3, 2)
         ┌─────────────────────┬─────────────────────┐
@@ -503,9 +497,7 @@ class ExprDateTimeNameSpace:
         Examples
         --------
         >>> from datetime import date
-        >>> df = pl.DataFrame(
-        ...     {"date": [date(1977, 1, 1), date(1978, 1, 1), date(1979, 1, 1)]}
-        ... )
+        >>> df = pl.DataFrame({"date": [date(1977, 1, 1), date(1978, 1, 1), date(1979, 1, 1)]})
         >>> df.select(
         ...     "date",
         ...     pl.col("date").dt.year().alias("calendar_year"),
@@ -539,9 +531,7 @@ class ExprDateTimeNameSpace:
         Examples
         --------
         >>> from datetime import date
-        >>> df = pl.DataFrame(
-        ...     {"date": [date(2000, 1, 1), date(2001, 1, 1), date(2002, 1, 1)]}
-        ... )
+        >>> df = pl.DataFrame({"date": [date(2000, 1, 1), date(2001, 1, 1), date(2002, 1, 1)]})
         >>> df.select(pl.col("date").dt.is_leap_year())
         shape: (3, 1)
         ┌───────┐
@@ -574,9 +564,7 @@ class ExprDateTimeNameSpace:
         Examples
         --------
         >>> from datetime import date
-        >>> df = pl.DataFrame(
-        ...     {"date": [date(1977, 1, 1), date(1978, 1, 1), date(1979, 1, 1)]}
-        ... )
+        >>> df = pl.DataFrame({"date": [date(1977, 1, 1), date(1978, 1, 1), date(1979, 1, 1)]})
         >>> df.select(
         ...     "date",
         ...     pl.col("date").dt.year().alias("calendar_year"),
@@ -612,9 +600,7 @@ class ExprDateTimeNameSpace:
         Examples
         --------
         >>> from datetime import date
-        >>> df = pl.DataFrame(
-        ...     {"date": [date(2001, 1, 1), date(2001, 6, 30), date(2001, 12, 27)]}
-        ... )
+        >>> df = pl.DataFrame({"date": [date(2001, 1, 1), date(2001, 6, 30), date(2001, 12, 27)]})
         >>> df.with_columns(pl.col("date").dt.quarter().alias("quarter"))
         shape: (3, 2)
         ┌────────────┬─────────┐
@@ -647,9 +633,7 @@ class ExprDateTimeNameSpace:
         Examples
         --------
         >>> from datetime import date
-        >>> df = pl.DataFrame(
-        ...     {"date": [date(2001, 1, 1), date(2001, 6, 30), date(2001, 12, 27)]}
-        ... )
+        >>> df = pl.DataFrame({"date": [date(2001, 1, 1), date(2001, 6, 30), date(2001, 12, 27)]})
         >>> df.with_columns(pl.col("date").dt.month().alias("month"))
         shape: (3, 2)
         ┌────────────┬───────┐
@@ -682,9 +666,7 @@ class ExprDateTimeNameSpace:
         Examples
         --------
         >>> from datetime import date
-        >>> df = pl.DataFrame(
-        ...     {"date": [date(2001, 1, 1), date(2001, 6, 30), date(2001, 12, 27)]}
-        ... )
+        >>> df = pl.DataFrame({"date": [date(2001, 1, 1), date(2001, 6, 30), date(2001, 12, 27)]})
         >>> df.with_columns(pl.col("date").dt.week().alias("week"))
         shape: (3, 2)
         ┌────────────┬──────┐
@@ -722,11 +704,7 @@ class ExprDateTimeNameSpace:
         --------
         >>> from datetime import timedelta, date
         >>> df = pl.DataFrame(
-        ...     {
-        ...         "date": pl.date_range(
-        ...             date(2001, 12, 22), date(2001, 12, 25), eager=True
-        ...         )
-        ...     }
+        ...     {"date": pl.date_range(date(2001, 12, 22), date(2001, 12, 25), eager=True)}
         ... )
         >>> df.with_columns(
         ...     pl.col("date").dt.weekday().alias("weekday"),
@@ -771,11 +749,7 @@ class ExprDateTimeNameSpace:
         --------
         >>> from datetime import timedelta, date
         >>> df = pl.DataFrame(
-        ...     {
-        ...         "date": pl.date_range(
-        ...             date(2001, 12, 22), date(2001, 12, 25), eager=True
-        ...         )
-        ...     }
+        ...     {"date": pl.date_range(date(2001, 12, 22), date(2001, 12, 25), eager=True)}
         ... )
         >>> df.with_columns(
         ...     pl.col("date").dt.weekday().alias("weekday"),
@@ -820,11 +794,7 @@ class ExprDateTimeNameSpace:
         --------
         >>> from datetime import timedelta, date
         >>> df = pl.DataFrame(
-        ...     {
-        ...         "date": pl.date_range(
-        ...             date(2001, 12, 22), date(2001, 12, 25), eager=True
-        ...         )
-        ...     }
+        ...     {"date": pl.date_range(date(2001, 12, 22), date(2001, 12, 25), eager=True)}
         ... )
         >>> df.with_columns(
         ...     pl.col("date").dt.weekday().alias("weekday"),
@@ -1011,9 +981,7 @@ class ExprDateTimeNameSpace:
         │ 2000-01-01 00:00:03.111110 ┆ 3      │
         │ 2000-01-01 00:00:05.765431 ┆ 5      │
         └────────────────────────────┴────────┘
-        >>> df.with_columns(
-        ...     pl.col("datetime").dt.second(fractional=True).alias("second")
-        ... )
+        >>> df.with_columns(pl.col("datetime").dt.second(fractional=True).alias("second"))
         shape: (3, 2)
         ┌────────────────────────────┬──────────┐
         │ datetime                   ┆ second   │
@@ -1123,9 +1091,7 @@ class ExprDateTimeNameSpace:
         Examples
         --------
         >>> from datetime import date
-        >>> df = pl.date_range(
-        ...     date(2001, 1, 1), date(2001, 1, 3), eager=True
-        ... ).to_frame()
+        >>> df = pl.date_range(date(2001, 1, 1), date(2001, 1, 3), eager=True).to_frame()
         >>> df.with_columns(
         ...     pl.col("date").dt.epoch().alias("epoch_ns"),
         ...     pl.col("date").dt.epoch(time_unit="s").alias("epoch_s"),
@@ -1165,9 +1131,7 @@ class ExprDateTimeNameSpace:
         Examples
         --------
         >>> from datetime import date
-        >>> df = pl.date_range(
-        ...     date(2001, 1, 1), date(2001, 1, 3), eager=True
-        ... ).to_frame()
+        >>> df = pl.date_range(date(2001, 1, 1), date(2001, 1, 3), eager=True).to_frame()
         >>> df.with_columns(
         ...     pl.col("date").dt.timestamp().alias("timestamp_ns"),
         ...     pl.col("date").dt.timestamp("ms").alias("timestamp_ms"),
@@ -1298,9 +1262,7 @@ class ExprDateTimeNameSpace:
         >>> df.select(
         ...     [
         ...         pl.col("date"),
-        ...         pl.col("date")
-        ...         .dt.convert_time_zone(time_zone="Europe/London")
-        ...         .alias("London"),
+        ...         pl.col("date").dt.convert_time_zone(time_zone="Europe/London").alias("London"),
         ...     ]
         ... )
         shape: (3, 2)

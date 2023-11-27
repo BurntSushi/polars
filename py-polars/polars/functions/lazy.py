@@ -44,9 +44,7 @@ def element() -> Expr:
     A horizontal rank computation by taking the elements of a list
 
     >>> df = pl.DataFrame({"a": [1, 8, 3], "b": [4, 5, 2]})
-    >>> df.with_columns(
-    ...     pl.concat_list(["a", "b"]).list.eval(pl.element().rank()).alias("rank")
-    ... )
+    >>> df.with_columns(pl.concat_list(["a", "b"]).list.eval(pl.element().rank()).alias("rank"))
     shape: (3, 3)
     ┌─────┬─────┬────────────┐
     │ a   ┆ b   ┆ rank       │
@@ -806,7 +804,6 @@ def map_batches(
     --------
     >>> def test_func(a, b, c):
     ...     return a + b + c
-    ...
     >>> df = pl.DataFrame(
     ...     {
     ...         "a": [1, 2, 3, 4],
@@ -926,8 +923,7 @@ def map_groups(
     ...     df.group_by("group").agg(
     ...         pl.map_groups(
     ...             exprs=["a", "b"],
-    ...             function=lambda list_of_series: list_of_series[0]
-    ...             / list_of_series[0].sum()
+    ...             function=lambda list_of_series: list_of_series[0] / list_of_series[0].sum()
     ...             + list_of_series[1],
     ...         ).alias("my_custom_aggregation")
     ...     )
@@ -1042,9 +1038,9 @@ def fold(
     Horizontally sum over all columns and add 1.
 
     >>> df.select(
-    ...     pl.fold(
-    ...         acc=pl.lit(1), function=lambda acc, x: acc + x, exprs=pl.col("*")
-    ...     ).alias("sum"),
+    ...     pl.fold(acc=pl.lit(1), function=lambda acc, x: acc + x, exprs=pl.col("*")).alias(
+    ...         "sum"
+    ...     ),
     ... )
     shape: (3, 1)
     ┌─────┐
@@ -1143,9 +1139,7 @@ def reduce(
 
     Horizontally sum over all columns.
 
-    >>> df.select(
-    ...     pl.reduce(function=lambda acc, x: acc + x, exprs=pl.col("*")).alias("sum")
-    ... )
+    >>> df.select(pl.reduce(function=lambda acc, x: acc + x, exprs=pl.col("*")).alias("sum"))
     shape: (3, 1)
     ┌─────┐
     │ sum │
@@ -1299,9 +1293,7 @@ def arctan2(y: str | Expr, x: str | Expr) -> Expr:
     ...         "x": [twoRootTwo, twoRootTwo, -twoRootTwo, -twoRootTwo],
     ...     }
     ... )
-    >>> df.select(
-    ...     pl.arctan2d("y", "x").alias("atan2d"), pl.arctan2("y", "x").alias("atan2")
-    ... )
+    >>> df.select(pl.arctan2d("y", "x").alias("atan2d"), pl.arctan2("y", "x").alias("atan2"))
     shape: (4, 2)
     ┌────────┬───────────┐
     │ atan2d ┆ atan2     │
@@ -1346,9 +1338,7 @@ def arctan2d(y: str | Expr, x: str | Expr) -> Expr:
     ...         "x": [twoRootTwo, twoRootTwo, -twoRootTwo, -twoRootTwo],
     ...     }
     ... )
-    >>> df.select(
-    ...     pl.arctan2d("y", "x").alias("atan2d"), pl.arctan2("y", "x").alias("atan2")
-    ... )
+    >>> df.select(pl.arctan2d("y", "x").alias("atan2d"), pl.arctan2("y", "x").alias("atan2"))
     shape: (4, 2)
     ┌────────┬───────────┐
     │ atan2d ┆ atan2     │

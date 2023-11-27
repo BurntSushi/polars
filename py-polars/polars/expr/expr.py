@@ -305,10 +305,7 @@ class Expr:
         >>> pl.DataFrame({"vals": ["a", "x", None, "a"]}).with_columns(
         ...     [
         ...         pl.col("vals").cast(pl.Categorical),
-        ...         pl.col("vals")
-        ...         .cast(pl.Categorical)
-        ...         .to_physical()
-        ...         .alias("vals_physical"),
+        ...         pl.col("vals").cast(pl.Categorical).to_physical().alias("vals_physical"),
         ...     ]
         ... )
         shape: (4, 2)
@@ -653,9 +650,7 @@ class Expr:
         ...         "B_reverse": ["z", "y", "x"],
         ...     }
         ... )
-        >>> df.with_columns(
-        ...     pl.all().reverse().name.map(lambda c: c.rstrip("_reverse").lower())
-        ... )
+        >>> df.with_columns(pl.all().reverse().name.map(lambda c: c.rstrip("_reverse").lower()))
         shape: (3, 4)
         ┌───────────┬───────────┬─────┬─────┐
         │ A_reverse ┆ B_reverse ┆ a   ┆ b   │
@@ -963,9 +958,7 @@ class Expr:
         >>>
         >>> df = pl.DataFrame({"val": ["a: 1", "b: 2", "c: 3", "d: 4"]})
         >>> df.with_columns(
-        ...     udfs=(
-        ...         pl.col("val").pipe(extract_number).pipe(scale_negative_even, n=5)
-        ...     ),
+        ...     udfs=(pl.col("val").pipe(extract_number).pipe(scale_negative_even, n=5)),
         ... )
         shape: (4, 2)
         ┌──────┬──────┐
@@ -1509,10 +1502,7 @@ class Expr:
         >>> df = pl.DataFrame({"values": [None, 10, None, 8, 9, None, 16, None]})
         >>> df.with_columns(
         ...     pl.col("values").cum_sum().alias("value_cum_sum"),
-        ...     pl.col("values")
-        ...     .cum_sum()
-        ...     .forward_fill()
-        ...     .alias("value_cum_sum_all_filled"),
+        ...     pl.col("values").cum_sum().forward_fill().alias("value_cum_sum_all_filled"),
         ... )
         shape: (8, 3)
         ┌────────┬───────────────┬──────────────────────────┐
@@ -2288,9 +2278,7 @@ class Expr:
 
         When sorting in a group by context, the groups are sorted.
 
-        >>> df.group_by("group").agg(
-        ...     pl.col("value1").sort_by("value2")
-        ... )  # doctest: +IGNORE_RESULT
+        >>> df.group_by("group").agg(pl.col("value1").sort_by("value2"))  # doctest: +IGNORE_RESULT
         shape: (2, 2)
         ┌───────┬───────────┐
         │ group ┆ value1    │
@@ -2304,9 +2292,7 @@ class Expr:
         Take a single row from each group where a column attains its minimal value
         within that group.
 
-        >>> df.group_by("group").agg(
-        ...     pl.all().sort_by("value2").first()
-        ... )  # doctest: +IGNORE_RESULT
+        >>> df.group_by("group").agg(pl.all().sort_by("value2").first())  # doctest: +IGNORE_RESULT
         shape: (2, 3)
         ┌───────┬────────┬────────┐
         │ group ┆ value1 ┆ value2 |
@@ -2362,9 +2348,7 @@ class Expr:
         ...         "value": [1, 98, 2, 3, 99, 4],
         ...     }
         ... )
-        >>> df.group_by("group", maintain_order=True).agg(
-        ...     pl.col("value").gather([2, 1])
-        ... )
+        >>> df.group_by("group", maintain_order=True).agg(pl.col("value").gather([2, 1]))
         shape: (2, 2)
         ┌───────┬───────────┐
         │ group ┆ value     │
@@ -3657,9 +3641,7 @@ class Expr:
         Divide a column into three categories.
 
         >>> df = pl.DataFrame({"foo": [-2, -1, 0, 1, 2]})
-        >>> df.with_columns(
-        ...     pl.col("foo").cut([-1, 1], labels=["a", "b", "c"]).alias("cut")
-        ... )
+        >>> df.with_columns(pl.col("foo").cut([-1, 1], labels=["a", "b", "c"]).alias("cut"))
         shape: (5, 2)
         ┌─────┬─────┐
         │ foo ┆ cut │
@@ -3675,9 +3657,9 @@ class Expr:
 
         Add both the category and the breakpoint.
 
-        >>> df.with_columns(
-        ...     pl.col("foo").cut([-1, 1], include_breaks=True).alias("cut")
-        ... ).unnest("cut")
+        >>> df.with_columns(pl.col("foo").cut([-1, 1], include_breaks=True).alias("cut")).unnest(
+        ...     "cut"
+        ... )
         shape: (5, 3)
         ┌─────┬──────┬────────────┐
         │ foo ┆ brk  ┆ foo_bin    │
@@ -3745,9 +3727,7 @@ class Expr:
         probabilities.
 
         >>> df = pl.DataFrame({"foo": [-2, -1, 0, 1, 2]})
-        >>> df.with_columns(
-        ...     pl.col("foo").qcut([0.25, 0.75], labels=["a", "b", "c"]).alias("qcut")
-        ... )
+        >>> df.with_columns(pl.col("foo").qcut([0.25, 0.75], labels=["a", "b", "c"]).alias("qcut"))
         shape: (5, 2)
         ┌─────┬──────┐
         │ foo ┆ qcut │
@@ -3764,9 +3744,7 @@ class Expr:
         Divide a column into two categories using uniform quantile probabilities.
 
         >>> df.with_columns(
-        ...     pl.col("foo")
-        ...     .qcut(2, labels=["low", "high"], left_closed=True)
-        ...     .alias("qcut")
+        ...     pl.col("foo").qcut(2, labels=["low", "high"], left_closed=True).alias("qcut")
         ... )
         shape: (5, 2)
         ┌─────┬──────┐
@@ -4115,9 +4093,7 @@ class Expr:
 
         In a GroupBy context, each element of the column is itself a Series:
 
-        >>> (
-        ...     df.lazy().group_by("b").agg(pl.col("a")).collect()
-        ... )  # doctest: +IGNORE_RESULT
+        >>> (df.lazy().group_by("b").agg(pl.col("a")).collect())  # doctest: +IGNORE_RESULT
         shape: (3, 2)
         ┌─────┬───────────┐
         │ b   ┆ a         │
@@ -4132,10 +4108,7 @@ class Expr:
         Therefore, from the user's point-of-view, the function is applied per-group:
 
         >>> (
-        ...     df.lazy()
-        ...     .group_by("b")
-        ...     .agg(pl.col("a").map_elements(lambda x: x.sum()))
-        ...     .collect()
+        ...     df.lazy().group_by("b").agg(pl.col("a").map_elements(lambda x: x.sum())).collect()
         ... )  # doctest: +IGNORE_RESULT
         shape: (3, 2)
         ┌─────┬─────┐
@@ -4151,10 +4124,7 @@ class Expr:
         Tip: again, it is better to implement this with an expression:
 
         >>> (
-        ...     df.lazy()
-        ...     .group_by("b", maintain_order=True)
-        ...     .agg(pl.col("a").sum())
-        ...     .collect()
+        ...     df.lazy().group_by("b", maintain_order=True).agg(pl.col("a").sum()).collect()
         ... )  # doctest: +IGNORE_RESULT
 
         Window function application using `over` will behave as a GroupBy
@@ -4187,9 +4157,7 @@ class Expr:
 
         >>> df.with_columns(
         ...     scaled=(pl.col("val") * pl.col("val").count()).over("key"),
-        ... ).sort(
-        ...     "key"
-        ... )  # doctest: +IGNORE_RESULT
+        ... ).sort("key")  # doctest: +IGNORE_RESULT
 
         """
         # input x: Series of type list containing the group values
@@ -4878,9 +4846,7 @@ class Expr:
         │ 5   ┆ 7     ┆ 125    │
         └─────┴───────┴────────┘
 
-        >>> df = pl.DataFrame(
-        ...     {"x": ["a", "d", "g"], "y": ["b", "e", "h"], "z": ["c", "f", "i"]}
-        ... )
+        >>> df = pl.DataFrame({"x": ["a", "d", "g"], "y": ["b", "e", "h"], "z": ["c", "f", "i"]})
         >>> df.with_columns(pl.col("x").add(pl.col("y")).add(pl.col("z")).alias("xyz"))
         shape: (3, 4)
         ┌─────┬─────┬─────┬─────┐
@@ -5047,9 +5013,7 @@ class Expr:
 
         Examples
         --------
-        >>> df = pl.DataFrame(
-        ...     data={"x": [-2, -1, 0, 1, 2], "y": [0.5, 0.0, 0.0, -4.0, -0.5]}
-        ... )
+        >>> df = pl.DataFrame(data={"x": [-2, -1, 0, 1, 2], "y": [0.5, 0.0, 0.0, -4.0, -0.5]})
         >>> df.with_columns(
         ...     pl.col("x").truediv(2).alias("x/2"),
         ...     pl.col("x").truediv(pl.col("y")).alias("x/y"),
@@ -5113,9 +5077,7 @@ class Expr:
 
         Examples
         --------
-        >>> df = pl.DataFrame(
-        ...     {"x": [True, False, True, False], "y": [True, True, False, False]}
-        ... )
+        >>> df = pl.DataFrame({"x": [True, False, True, False], "y": [True, True, False, False]})
         >>> df.with_columns(pl.col("x").xor(pl.col("y")).alias("x ^ y"))
         shape: (4, 3)
         ┌───────┬───────┬───────┐
@@ -5140,10 +5102,7 @@ class Expr:
         ...     pl.col("x").map_elements(binary_string).alias("bin_x"),
         ...     pl.col("y").map_elements(binary_string).alias("bin_y"),
         ...     pl.col("x").xor(pl.col("y")).alias("xor_xy"),
-        ...     pl.col("x")
-        ...     .xor(pl.col("y"))
-        ...     .map_elements(binary_string)
-        ...     .alias("bin_xor_xy"),
+        ...     pl.col("x").xor(pl.col("y")).map_elements(binary_string).alias("bin_xor_xy"),
         ... )
         shape: (4, 6)
         ┌─────┬─────┬──────────┬──────────┬────────┬────────────┐
@@ -5176,9 +5135,7 @@ class Expr:
 
         Examples
         --------
-        >>> df = pl.DataFrame(
-        ...     {"sets": [[1, 2, 3], [1, 2], [9, 10]], "optional_members": [1, 2, 3]}
-        ... )
+        >>> df = pl.DataFrame({"sets": [[1, 2, 3], [1, 2], [9, 10]], "optional_members": [1, 2, 3]})
         >>> df.with_columns(contains=pl.col("optional_members").is_in("sets"))
         shape: (3, 3)
         ┌───────────┬──────────────────┬──────────┐
@@ -5288,9 +5245,7 @@ class Expr:
 
         Use the `closed` argument to include or exclude the values at the bounds:
 
-        >>> df.with_columns(
-        ...     pl.col("num").is_between(2, 4, closed="left").alias("is_between")
-        ... )
+        >>> df.with_columns(pl.col("num").is_between(2, 4, closed="left").alias("is_between"))
         shape: (5, 2)
         ┌─────┬────────────┐
         │ num ┆ is_between │
@@ -5310,9 +5265,7 @@ class Expr:
 
         >>> df = pl.DataFrame({"a": ["a", "b", "c", "d", "e"]})
         >>> df.with_columns(
-        ...     pl.col("a")
-        ...     .is_between(pl.lit("a"), pl.lit("c"), closed="both")
-        ...     .alias("is_between")
+        ...     pl.col("a").is_between(pl.lit("a"), pl.lit("c"), closed="both").alias("is_between")
         ... )
         shape: (5, 2)
         ┌─────┬────────────┐
@@ -5525,9 +5478,9 @@ class Expr:
         ...     }
         ... )  # Interpolate from this to the new grid
         >>> df_new_grid = pl.DataFrame({"grid_points": range(1, 11)})
-        >>> df_new_grid.join(
-        ...     df_original_grid, on="grid_points", how="left"
-        ... ).with_columns(pl.col("values").interpolate())
+        >>> df_new_grid.join(df_original_grid, on="grid_points", how="left").with_columns(
+        ...     pl.col("values").interpolate()
+        ... )
         shape: (10, 2)
         ┌─────────────┬────────┐
         │ grid_points ┆ values │
@@ -5664,9 +5617,7 @@ class Expr:
         Specify weights to multiply the values in the window with:
 
         >>> df.with_columns(
-        ...     rolling_min=pl.col("A").rolling_min(
-        ...         window_size=2, weights=[0.25, 0.75]
-        ...     ),
+        ...     rolling_min=pl.col("A").rolling_min(window_size=2, weights=[0.25, 0.75]),
         ... )
         shape: (6, 2)
         ┌─────┬─────────────┐
@@ -5871,9 +5822,7 @@ class Expr:
         Specify weights to multiply the values in the window with:
 
         >>> df.with_columns(
-        ...     rolling_max=pl.col("A").rolling_max(
-        ...         window_size=2, weights=[0.25, 0.75]
-        ...     ),
+        ...     rolling_max=pl.col("A").rolling_max(window_size=2, weights=[0.25, 0.75]),
         ... )
         shape: (6, 2)
         ┌─────┬─────────────┐
@@ -6109,9 +6058,7 @@ class Expr:
         Specify weights to multiply the values in the window with:
 
         >>> df.with_columns(
-        ...     rolling_mean=pl.col("A").rolling_mean(
-        ...         window_size=2, weights=[0.25, 0.75]
-        ...     ),
+        ...     rolling_mean=pl.col("A").rolling_mean(window_size=2, weights=[0.25, 0.75]),
         ... )
         shape: (6, 2)
         ┌─────┬──────────────┐
@@ -6349,9 +6296,7 @@ class Expr:
         Specify weights to multiply the values in the window with:
 
         >>> df.with_columns(
-        ...     rolling_sum=pl.col("A").rolling_sum(
-        ...         window_size=2, weights=[0.25, 0.75]
-        ...     ),
+        ...     rolling_sum=pl.col("A").rolling_sum(window_size=2, weights=[0.25, 0.75]),
         ... )
         shape: (6, 2)
         ┌─────┬─────────────┐
@@ -6586,9 +6531,7 @@ class Expr:
         Specify weights to multiply the values in the window with:
 
         >>> df.with_columns(
-        ...     rolling_std=pl.col("A").rolling_std(
-        ...         window_size=2, weights=[0.25, 0.75]
-        ...     ),
+        ...     rolling_std=pl.col("A").rolling_std(window_size=2, weights=[0.25, 0.75]),
         ... )
         shape: (6, 2)
         ┌─────┬─────────────┐
@@ -6830,9 +6773,7 @@ class Expr:
         Specify weights to multiply the values in the window with:
 
         >>> df.with_columns(
-        ...     rolling_var=pl.col("A").rolling_var(
-        ...         window_size=2, weights=[0.25, 0.75]
-        ...     ),
+        ...     rolling_var=pl.col("A").rolling_var(window_size=2, weights=[0.25, 0.75]),
         ... )
         shape: (6, 2)
         ┌─────┬─────────────┐
@@ -7071,9 +7012,7 @@ class Expr:
         Specify weights for the values in each window:
 
         >>> df.with_columns(
-        ...     rolling_median=pl.col("A").rolling_median(
-        ...         window_size=2, weights=[0.25, 0.75]
-        ...     ),
+        ...     rolling_median=pl.col("A").rolling_median(window_size=2, weights=[0.25, 0.75]),
         ... )
         shape: (6, 2)
         ┌─────┬────────────────┐
@@ -7218,9 +7157,7 @@ class Expr:
         --------
         >>> df = pl.DataFrame({"A": [1.0, 2.0, 3.0, 4.0, 5.0, 6.0]})
         >>> df.with_columns(
-        ...     rolling_quantile=pl.col("A").rolling_quantile(
-        ...         quantile=0.25, window_size=4
-        ...     ),
+        ...     rolling_quantile=pl.col("A").rolling_quantile(quantile=0.25, window_size=4),
         ... )
         shape: (6, 2)
         ┌─────┬──────────────────┐
@@ -8720,9 +8657,7 @@ class Expr:
 
         Examples
         --------
-        >>> df = pl.DataFrame(
-        ...     {"color": ["red", "blue", "red", "green", "blue", "blue"]}
-        ... )
+        >>> df = pl.DataFrame({"color": ["red", "blue", "red", "green", "blue", "blue"]})
         >>> df.select(pl.col("color").value_counts())  # doctest: +IGNORE_RESULT
         shape: (3, 1)
         ┌─────────────┐
@@ -8903,11 +8838,7 @@ class Expr:
         --------
         >>> df = pl.DataFrame({"values": [1, 2, 3, 4, 5]})
         >>> df.select(
-        ...     [
-        ...         pl.col("values").cumulative_eval(
-        ...             pl.element().first() - pl.element().last() ** 2
-        ...         )
-        ...     ]
+        ...     [pl.col("values").cumulative_eval(pl.element().first() - pl.element().last() ** 2)]
         ... )
         shape: (5, 1)
         ┌────────┐
@@ -9070,9 +9001,7 @@ class Expr:
         ...     None: "unspecified",
         ... }
         >>> df.with_columns(
-        ...     pl.col("country_code")
-        ...     .replace(country_code_map, default=None)
-        ...     .alias("replaced")
+        ...     pl.col("country_code").replace(country_code_map, default=None).alias("replaced")
         ... )
         shape: (4, 2)
         ┌──────────────┬─────────────┐
@@ -9803,9 +9732,7 @@ class Expr:
 
         Examples
         --------
-        >>> df = pl.DataFrame({"values": ["a", "b"]}).select(
-        ...     pl.col("values").cast(pl.Categorical)
-        ... )
+        >>> df = pl.DataFrame({"values": ["a", "b"]}).select(pl.col("values").cast(pl.Categorical))
         >>> df.select(pl.col("values").cat.set_ordering(ordering="physical"))
         shape: (2, 1)
         ┌────────┐

@@ -52,9 +52,7 @@ class LazyGroupBy:
         ...         "c": [5, 4, 3, 2, 1],
         ...     }
         ... ).lazy()
-        >>> ldf.group_by("a").agg(
-        ...     [pl.col("b"), pl.col("c")]
-        ... ).collect()  # doctest: +IGNORE_RESULT
+        >>> ldf.group_by("a").agg([pl.col("b"), pl.col("c")]).collect()  # doctest: +IGNORE_RESULT
         shape: (3, 3)
         ┌─────┬───────────┬───────────┐
         │ a   ┆ b         ┆ c         │
@@ -70,9 +68,7 @@ class LazyGroupBy:
 
         Compute the sum of a column for each group.
 
-        >>> ldf.group_by("a").agg(
-        ...     pl.col("b").sum()
-        ... ).collect()  # doctest: +IGNORE_RESULT
+        >>> ldf.group_by("a").agg(pl.col("b").sum()).collect()  # doctest: +IGNORE_RESULT
         shape: (3, 2)
         ┌─────┬─────┐
         │ a   ┆ b   │
@@ -86,9 +82,7 @@ class LazyGroupBy:
 
         Compute multiple aggregates at once by passing a list of expressions.
 
-        >>> ldf.group_by("a").agg(
-        ...     [pl.sum("b"), pl.mean("c")]
-        ... ).collect()  # doctest: +IGNORE_RESULT
+        >>> ldf.group_by("a").agg([pl.sum("b"), pl.mean("c")]).collect()  # doctest: +IGNORE_RESULT
         shape: (3, 3)
         ┌─────┬─────┬─────┐
         │ a   ┆ b   ┆ c   │
@@ -209,9 +203,7 @@ class LazyGroupBy:
         It is better to implement this with an expression:
 
         >>> (
-        ...     df.lazy()
-        ...     .filter(pl.int_range(0, pl.count()).shuffle().over("color") < 2)
-        ...     .collect()
+        ...     df.lazy().filter(pl.int_range(0, pl.count()).shuffle().over("color") < 2).collect()
         ... )  # doctest: +IGNORE_RESULT
 
         """

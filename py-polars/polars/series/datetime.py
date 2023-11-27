@@ -64,9 +64,7 @@ class DateTimeNameSpace:
         Examples
         --------
         >>> from datetime import datetime
-        >>> date = pl.datetime_range(
-        ...     datetime(2001, 1, 1), datetime(2001, 1, 3), "1d", eager=True
-        ... )
+        >>> date = pl.datetime_range(datetime(2001, 1, 1), datetime(2001, 1, 3), "1d", eager=True)
         >>> date
         shape: (3,)
         Series: 'datetime' [datetime[μs]]
@@ -95,9 +93,7 @@ class DateTimeNameSpace:
         Examples
         --------
         >>> from datetime import datetime
-        >>> s = pl.Series(
-        ...     [datetime(2001, 1, 1), datetime(2001, 1, 2), datetime(2001, 1, 3)]
-        ... )
+        >>> s = pl.Series([datetime(2001, 1, 1), datetime(2001, 1, 2), datetime(2001, 1, 3)])
         >>> s.dt.mean()
         datetime.datetime(2001, 1, 2, 0, 0)
 
@@ -223,9 +219,7 @@ class DateTimeNameSpace:
         Examples
         --------
         >>> from datetime import date
-        >>> s = pl.Series(
-        ...     "date", [date(2000, 1, 1), date(2001, 1, 1), date(2002, 1, 1)]
-        ... )
+        >>> s = pl.Series("date", [date(2000, 1, 1), date(2001, 1, 1), date(2002, 1, 1)])
         >>> s.dt.is_leap_year()
         shape: (3,)
         Series: 'date' [bool]
@@ -280,9 +274,7 @@ class DateTimeNameSpace:
         Examples
         --------
         >>> from datetime import date
-        >>> date = pl.date_range(
-        ...     date(2001, 1, 1), date(2001, 4, 1), interval="1mo", eager=True
-        ... )
+        >>> date = pl.date_range(date(2001, 1, 1), date(2001, 4, 1), interval="1mo", eager=True)
         >>> date.dt.quarter()
         shape: (4,)
         Series: 'date' [u32]
@@ -312,9 +304,7 @@ class DateTimeNameSpace:
         Examples
         --------
         >>> from datetime import date
-        >>> date = pl.date_range(
-        ...     date(2001, 1, 1), date(2001, 4, 1), interval="1mo", eager=True
-        ... )
+        >>> date = pl.date_range(date(2001, 1, 1), date(2001, 4, 1), interval="1mo", eager=True)
         >>> date.dt.month()
         shape: (4,)
         Series: 'date' [u32]
@@ -344,9 +334,7 @@ class DateTimeNameSpace:
         Examples
         --------
         >>> from datetime import date
-        >>> date = pl.date_range(
-        ...     date(2001, 1, 1), date(2001, 4, 1), interval="1mo", eager=True
-        ... )
+        >>> date = pl.date_range(date(2001, 1, 1), date(2001, 4, 1), interval="1mo", eager=True)
         >>> date.dt.week()
         shape: (4,)
         Series: 'date' [u32]
@@ -408,9 +396,7 @@ class DateTimeNameSpace:
         Examples
         --------
         >>> from datetime import date
-        >>> s = pl.date_range(
-        ...     date(2001, 1, 1), date(2001, 1, 9), interval="2d", eager=True
-        ... )
+        >>> s = pl.date_range(date(2001, 1, 1), date(2001, 1, 9), interval="2d", eager=True)
         >>> s.dt.day()
         shape: (5,)
         Series: 'date' [u32]
@@ -441,9 +427,7 @@ class DateTimeNameSpace:
         Examples
         --------
         >>> from datetime import date
-        >>> s = pl.date_range(
-        ...     date(2001, 1, 1), date(2001, 3, 1), interval="1mo", eager=True
-        ... )
+        >>> s = pl.date_range(date(2001, 1, 1), date(2001, 3, 1), interval="1mo", eager=True)
         >>> s.dt.ordinal_day()
         shape: (3,)
         Series: 'date' [u32]
@@ -469,9 +453,7 @@ class DateTimeNameSpace:
         Examples
         --------
         >>> from datetime import datetime
-        >>> ser = pl.Series([datetime(2021, 1, 2, 5)]).dt.replace_time_zone(
-        ...     "Asia/Kathmandu"
-        ... )
+        >>> ser = pl.Series([datetime(2021, 1, 2, 5)]).dt.replace_time_zone("Asia/Kathmandu")
         >>> ser
         shape: (1,)
         Series: '' [datetime[μs, Asia/Kathmandu]]
@@ -500,9 +482,7 @@ class DateTimeNameSpace:
         Examples
         --------
         >>> from datetime import datetime
-        >>> ser = pl.Series([datetime(2021, 1, 2, 5)]).dt.replace_time_zone(
-        ...     "Asia/Kathmandu"
-        ... )
+        >>> ser = pl.Series([datetime(2021, 1, 2, 5)]).dt.replace_time_zone("Asia/Kathmandu")
         >>> ser
         shape: (1,)
         Series: '' [datetime[μs, Asia/Kathmandu]]
@@ -531,9 +511,7 @@ class DateTimeNameSpace:
         Examples
         --------
         >>> from datetime import datetime
-        >>> ser = pl.Series([datetime(2021, 1, 2, 5)]).dt.replace_time_zone(
-        ...     "Asia/Kathmandu"
-        ... )
+        >>> ser = pl.Series([datetime(2021, 1, 2, 5)]).dt.replace_time_zone("Asia/Kathmandu")
         >>> ser
         shape: (1,)
         Series: '' [datetime[μs, Asia/Kathmandu]]
@@ -1110,9 +1088,7 @@ class DateTimeNameSpace:
         Examples
         --------
         >>> from datetime import datetime
-        >>> date = pl.datetime_range(
-        ...     datetime(2020, 3, 1), datetime(2020, 5, 1), "1mo", eager=True
-        ... )
+        >>> date = pl.datetime_range(datetime(2020, 3, 1), datetime(2020, 5, 1), "1mo", eager=True)
         >>> date
         shape: (3,)
         Series: 'datetime' [datetime[μs]]
@@ -1144,9 +1120,7 @@ class DateTimeNameSpace:
         Examples
         --------
         >>> from datetime import datetime
-        >>> date = pl.datetime_range(
-        ...     datetime(2020, 1, 1), datetime(2020, 1, 4), "1d", eager=True
-        ... )
+        >>> date = pl.datetime_range(datetime(2020, 1, 1), datetime(2020, 1, 4), "1d", eager=True)
         >>> date
         shape: (4,)
         Series: 'datetime' [datetime[μs]]
@@ -1180,9 +1154,7 @@ class DateTimeNameSpace:
         Examples
         --------
         >>> from datetime import datetime
-        >>> date = pl.datetime_range(
-        ...     datetime(2020, 1, 1), datetime(2020, 1, 4), "1d", eager=True
-        ... )
+        >>> date = pl.datetime_range(datetime(2020, 1, 1), datetime(2020, 1, 4), "1d", eager=True)
         >>> date
         shape: (4,)
         Series: 'datetime' [datetime[μs]]
@@ -1392,9 +1364,7 @@ class DateTimeNameSpace:
         Examples
         --------
         >>> from datetime import datetime
-        >>> dates = pl.datetime_range(
-        ...     datetime(2000, 1, 1), datetime(2005, 1, 1), "1y", eager=True
-        ... )
+        >>> dates = pl.datetime_range(datetime(2000, 1, 1), datetime(2005, 1, 1), "1y", eager=True)
         >>> dates
         shape: (6,)
         Series: 'datetime' [datetime[μs]]
@@ -1542,9 +1512,7 @@ class DateTimeNameSpace:
             2001-01-01 22:00:00
         ]
 
-        >>> s = pl.datetime_range(
-        ...     datetime(2001, 1, 1), datetime(2001, 1, 1, 1), "10m", eager=True
-        ... )
+        >>> s = pl.datetime_range(datetime(2001, 1, 1), datetime(2001, 1, 1, 1), "10m", eager=True)
         >>> s
         shape: (7,)
         Series: 'datetime' [datetime[μs]]

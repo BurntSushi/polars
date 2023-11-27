@@ -122,9 +122,7 @@ def read_delta(
 
     >>> table_path = "/path/to/delta-table/"
     >>> delta_table_options = {"without_files": True}
-    >>> pl.read_delta(
-    ...     table_path, delta_table_options=delta_table_options
-    ... )  # doctest: +SKIP
+    >>> pl.read_delta(table_path, delta_table_options=delta_table_options)  # doctest: +SKIP
 
     """
     if pyarrow_options is None:
@@ -212,9 +210,7 @@ def scan_delta(
     ...     "AWS_ACCESS_KEY_ID": "THE_AWS_ACCESS_KEY_ID",
     ...     "AWS_SECRET_ACCESS_KEY": "THE_AWS_SECRET_ACCESS_KEY",
     ... }
-    >>> pl.scan_delta(
-    ...     table_path, storage_options=storage_options
-    ... ).collect()  # doctest: +SKIP
+    >>> pl.scan_delta(table_path, storage_options=storage_options).collect()  # doctest: +SKIP
 
     Creates a scan for a Delta table from Google Cloud storage (GCS).
     See a list of supported storage options for GCS `here
@@ -222,9 +218,7 @@ def scan_delta(
 
     >>> table_path = "gs://bucket/path/to/delta-table/"
     >>> storage_options = {"SERVICE_ACCOUNT": "SERVICE_ACCOUNT_JSON_ABSOLUTE_PATH"}
-    >>> pl.scan_delta(
-    ...     table_path, storage_options=storage_options
-    ... ).collect()  # doctest: +SKIP
+    >>> pl.scan_delta(table_path, storage_options=storage_options).collect()  # doctest: +SKIP
 
     Creates a scan for a Delta table from Azure.
     Supported options for Azure are available `here
@@ -241,9 +235,7 @@ def scan_delta(
     ...     "AZURE_STORAGE_ACCOUNT_NAME": "AZURE_STORAGE_ACCOUNT_NAME",
     ...     "AZURE_STORAGE_ACCOUNT_KEY": "AZURE_STORAGE_ACCOUNT_KEY",
     ... }
-    >>> pl.scan_delta(
-    ...     table_path, storage_options=storage_options
-    ... ).collect()  # doctest: +SKIP
+    >>> pl.scan_delta(table_path, storage_options=storage_options).collect()  # doctest: +SKIP
 
     Creates a scan for a Delta table with additional delta specific options.
     In the below example, `without_files` option is used which loads the table without

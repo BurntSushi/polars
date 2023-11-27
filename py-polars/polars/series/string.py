@@ -303,9 +303,7 @@ class StringNameSpace:
 
         Examples
         --------
-        >>> s = pl.Series(
-        ...     ["40.12", "3420.13", "120134.19", "3212.98", "12.90", "143.09", "143.9"]
-        ... )
+        >>> s = pl.Series(["40.12", "3420.13", "120134.19", "3212.98", "12.90", "143.09", "143.9"])
         >>> s.str.to_decimal()
         shape: (7,)
         Series: '' [decimal[*,2]]
@@ -820,11 +818,7 @@ class StringNameSpace:
 
         For example, we can access the first group via the string `"1"`::
 
-            >>> (
-            ...     pl.Series(["foo bar baz"])
-            ...     .str.extract_groups(r"(\w+) (.+) (\w+)")
-            ...     .struct["1"]
-            ... )
+            >>> (pl.Series(["foo bar baz"]).str.extract_groups(r"(\w+) (.+) (\w+)").struct["1"])
             shape: (1,)
             Series: '1' [str]
             [

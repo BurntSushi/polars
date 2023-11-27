@@ -4296,9 +4296,7 @@ class Series:
 
         It is better to implement this as follows:
 
-        >>> s.to_frame().select(
-        ...     pl.when(pl.col("a") == 2).then(10).otherwise(pl.col("a"))
-        ... )
+        >>> s.to_frame().select(pl.when(pl.col("a") == 2).then(10).otherwise(pl.col("a")))
         shape: (3, 1)
         ┌─────────┐
         │ literal │

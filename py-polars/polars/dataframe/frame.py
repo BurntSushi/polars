@@ -333,7 +333,6 @@ class DataFrame:
 
     >>> class MyDataFrame(pl.DataFrame):
     ...     pass
-    ...
     >>> isinstance(MyDataFrame().lazy().collect(), MyDataFrame)
     False
 
@@ -1889,9 +1888,7 @@ class DataFrame:
 
         Examples
         --------
-        >>> df = pl.DataFrame(
-        ...     {"foo": [1, 2, 3, 4, 5, 6], "bar": ["a", "b", "c", "d", "e", "f"]}
-        ... )
+        >>> df = pl.DataFrame({"foo": [1, 2, 3, 4, 5, 6], "bar": ["a", "b", "c", "d", "e", "f"]})
         >>> df.to_arrow()
         pyarrow.Table
         foo: int64
@@ -2188,9 +2185,7 @@ class DataFrame:
         bar    float64
         ham     object
         dtype: object
-        >>> pandas_df2_pa = df2.to_pandas(
-        ...     use_pyarrow_extension_array=True
-        ... )  # doctest: +SKIP
+        >>> pandas_df2_pa = df2.to_pandas(use_pyarrow_extension_array=True)  # doctest: +SKIP
         >>> pandas_df2_pa  # doctest: +SKIP
             foo   bar   ham
         0     1     6  <NA>
@@ -2940,7 +2935,6 @@ class DataFrame:
         ...     )
         ...     ws.write(2, 1, "Basic/default conditional formatting", fmt_title)
         ...     ws.write(len(df) + 6, 1, "Customised conditional formatting", fmt_title)
-        ...
 
         Export a table containing two different types of sparklines. Use default
         options for the "trend" sparkline and customised options (and positioning)
@@ -3762,9 +3756,7 @@ class DataFrame:
 
         Include the header as a separate column
 
-        >>> df.transpose(
-        ...     include_header=True, header_name="foo", column_names=["a", "b", "c"]
-        ... )
+        >>> df.transpose(include_header=True, header_name="foo", column_names=["a", "b", "c"])
         shape: (2, 4)
         ┌─────┬─────┬─────┬─────┐
         │ foo ┆ a   ┆ b   ┆ c   │
@@ -3783,7 +3775,6 @@ class DataFrame:
         ...     while True:
         ...         yield f"{base_name}{count}"
         ...         count += 1
-        ...
         >>> df.transpose(include_header=False, column_names=name_generator())
         shape: (2, 3)
         ┌─────────────┬─────────────┬─────────────┐
@@ -3862,9 +3853,7 @@ class DataFrame:
 
         Examples
         --------
-        >>> df = pl.DataFrame(
-        ...     {"foo": [1, 2, 3], "bar": [6, 7, 8], "ham": ["a", "b", "c"]}
-        ... )
+        >>> df = pl.DataFrame({"foo": [1, 2, 3], "bar": [6, 7, 8], "ham": ["a", "b", "c"]})
         >>> df.rename({"foo": "apple"})
         shape: (3, 3)
         ┌───────┬─────┬─────┐
@@ -4250,9 +4239,7 @@ class DataFrame:
 
         Examples
         --------
-        >>> df = pl.DataFrame(
-        ...     {"foo": [1, 2, 3], "bar": [6, 7, 8], "ham": ["a", "b", "c"]}
-        ... )
+        >>> df = pl.DataFrame({"foo": [1, 2, 3], "bar": [6, 7, 8], "ham": ["a", "b", "c"]})
         >>> df.get_column_index("ham")
         2
 
@@ -4954,7 +4941,6 @@ class DataFrame:
         --------
         >>> def cast_str_to_int(data, col_name):
         ...     return data.with_columns(pl.col(col_name).cast(pl.Int64))
-        ...
         >>> df = pl.DataFrame({"a": [1, 2, 3, 4], "b": ["10", "20", "30", "40"]})
         >>> df.pipe(cast_str_to_int, col_name="b")
         shape: (4, 2)
@@ -5134,7 +5120,6 @@ class DataFrame:
         >>> for name, data in df.group_by("a"):  # doctest: +SKIP
         ...     print(name)
         ...     print(data)
-        ...
         a
         shape: (2, 3)
         ┌─────┬─────┬─────┐
@@ -5515,9 +5500,9 @@ class DataFrame:
 
         The window boundaries can also be added to the aggregation result
 
-        >>> df.group_by_dynamic(
-        ...     "time", every="1h", include_boundaries=True, closed="right"
-        ... ).agg(pl.col("n").mean())
+        >>> df.group_by_dynamic("time", every="1h", include_boundaries=True, closed="right").agg(
+        ...     pl.col("n").mean()
+        ... )
         shape: (4, 4)
         ┌─────────────────────┬─────────────────────┬─────────────────────┬─────┐
         │ _lower_boundary     ┆ _upper_boundary     ┆ time                ┆ n   │
@@ -5724,9 +5709,9 @@ class DataFrame:
         ...         "values": [0, 1, 2, 3],
         ...     }
         ... ).set_sorted("time")
-        >>> df.upsample(
-        ...     time_column="time", every="1mo", by="groups", maintain_order=True
-        ... ).select(pl.all().forward_fill())
+        >>> df.upsample(time_column="time", every="1mo", by="groups", maintain_order=True).select(
+        ...     pl.all().forward_fill()
+        ... )
         shape: (7, 3)
         ┌─────────────────────┬────────┬────────┐
         │ time                ┆ groups ┆ values │
@@ -7779,7 +7764,6 @@ class DataFrame:
         ...     df.select(
         ...         is_odd=(pl.col(pl.INTEGER_DTYPES) % 2).name.suffix("_is_odd"),
         ...     )
-        ...
         shape: (3, 1)
         ┌───────────┐
         │ is_odd    │
@@ -7954,7 +7938,6 @@ class DataFrame:
         ...     df.drop("c").with_columns(
         ...         diffs=pl.col(["a", "b"]).diff().name.suffix("_diff"),
         ...     )
-        ...
         shape: (4, 3)
         ┌─────┬──────┬─────────────┐
         │ a   ┆ b    ┆ diffs       │
@@ -9661,7 +9644,6 @@ class DataFrame:
         ... )
         >>> for idx, frame in enumerate(df.iter_slices()):
         ...     print(f"{type(frame).__name__}:[{idx}]:{len(frame)}")
-        ...
         DataFrame:[0]:10000
         DataFrame:[1]:7500
 
@@ -9671,7 +9653,6 @@ class DataFrame:
         >>> for frame in df.iter_slices(n_rows=15_000):
         ...     record_batch = frame.to_arrow().to_batches()[0]
         ...     print(f"{record_batch.schema}\n<< {len(record_batch)}")
-        ...
         a: int32
         b: date32[day]
         c: large_string
@@ -9968,9 +9949,7 @@ class DataFrame:
 
         Examples
         --------
-        >>> df0 = pl.DataFrame(
-        ...     {"name": ["steve", "elise", "bob"], "age": [42, 44, 18]}
-        ... ).sort("age")
+        >>> df0 = pl.DataFrame({"name": ["steve", "elise", "bob"], "age": [42, 44, 18]}).sort("age")
         >>> df0
         shape: (3, 2)
         ┌───────┬─────┐
@@ -10163,9 +10142,7 @@ class DataFrame:
         Update `df` values including null values in `new_df`, using an outer join
         strategy that defines explicit join columns in each frame:
 
-        >>> df.update(
-        ...     new_df, left_on="A", right_on="C", how="outer", include_nulls=True
-        ... )
+        >>> df.update(new_df, left_on="A", right_on="C", how="outer", include_nulls=True)
         shape: (5, 2)
         ┌─────┬──────┐
         │ A   ┆ B    │

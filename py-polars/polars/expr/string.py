@@ -545,9 +545,7 @@ class ExprStringNameSpace:
 
         Examples
         --------
-        >>> df = pl.DataFrame(
-        ...     {"sing": ["welcome to my world", "THERE'S NO TURNING BACK"]}
-        ... )
+        >>> df = pl.DataFrame({"sing": ["welcome to my world", "THERE'S NO TURNING BACK"]})
         >>> df.with_columns(foo_title=pl.col("sing").str.to_titlecase())
         shape: (2, 2)
         ┌─────────────────────────┬─────────────────────────┐
@@ -1189,9 +1187,7 @@ class ExprStringNameSpace:
 
         Examples
         --------
-        >>> df = pl.DataFrame(
-        ...     {"json": ['{"a":1, "b": true}', None, '{"a":2, "b": false}']}
-        ... )
+        >>> df = pl.DataFrame({"json": ['{"a":1, "b": true}', None, '{"a":2, "b": false}']})
         >>> dtype = pl.Struct([pl.Field("a", pl.Int64), pl.Field("b", pl.Boolean)])
         >>> df.with_columns(decoded=pl.col("json").str.json_decode(dtype))
         shape: (3, 2)
@@ -1505,9 +1501,9 @@ class ExprStringNameSpace:
 
             >>> df = pl.DataFrame({"col": ["foo bar baz"]})
             >>> (
-            ...     df.with_columns(
-            ...         pl.col("col").str.extract_groups(r"(\S+) (\S+) (.+)")
-            ...     ).select(pl.col("col").struct["2"], pl.col("col").struct["3"])
+            ...     df.with_columns(pl.col("col").str.extract_groups(r"(\S+) (\S+) (.+)")).select(
+            ...         pl.col("col").struct["2"], pl.col("col").struct["3"]
+            ...     )
             ... )
             shape: (1, 2)
             ┌─────┬─────┐
@@ -1536,9 +1532,7 @@ class ExprStringNameSpace:
         ...     }
         ... )
         >>> pattern = r"candidate=(?<candidate>\w+)&ref=(?<ref>\w+)"
-        >>> df.select(captures=pl.col("url").str.extract_groups(pattern)).unnest(
-        ...     "captures"
-        ... )
+        >>> df.select(captures=pl.col("url").str.extract_groups(pattern)).unnest("captures")
         shape: (3, 2)
         ┌───────────┬────────┐
         │ candidate ┆ ref    │
@@ -1554,9 +1548,9 @@ class ExprStringNameSpace:
 
         >>> pattern = r"candidate=(\w+)&ref=(\w+)"
         >>> (
-        ...     df.with_columns(
-        ...         captures=pl.col("url").str.extract_groups(pattern)
-        ...     ).with_columns(name=pl.col("captures").struct["1"].str.to_uppercase())
+        ...     df.with_columns(captures=pl.col("url").str.extract_groups(pattern)).with_columns(
+        ...         name=pl.col("captures").struct["1"].str.to_uppercase()
+        ...     )
         ... )
         shape: (3, 3)
         ┌───────────────────────────────────┬───────────────────────┬──────────┐
@@ -1610,9 +1604,7 @@ class ExprStringNameSpace:
 
         >>> df = pl.DataFrame({"bar": ["12 dbc 3xy", "cat\\w", "1zy3\\d\\d", None]})
         >>> df.with_columns(
-        ...     pl.col("bar")
-        ...     .str.count_matches(r"\d", literal=True)
-        ...     .alias("count_digits"),
+        ...     pl.col("bar").str.count_matches(r"\d", literal=True).alias("count_digits"),
         ... )
         shape: (4, 2)
         ┌────────────┬──────────────┐
@@ -1659,14 +1651,10 @@ class ExprStringNameSpace:
         │ foo_bar_baz ┆ ["foo", "bar", "baz"] ┆ ["foo_", "bar_", "baz"] │
         └─────────────┴───────────────────────┴─────────────────────────┘
 
-        >>> df = pl.DataFrame(
-        ...     {"s": ["foo^bar", "foo_bar", "foo*bar*baz"], "by": ["_", "_", "*"]}
-        ... )
+        >>> df = pl.DataFrame({"s": ["foo^bar", "foo_bar", "foo*bar*baz"], "by": ["_", "_", "*"]})
         >>> df.with_columns(
         ...     pl.col("s").str.split(by=pl.col("by")).alias("split"),
-        ...     pl.col("s")
-        ...     .str.split(by=pl.col("by"), inclusive=True)
-        ...     .alias("split_inclusive"),
+        ...     pl.col("s").str.split(by=pl.col("by"), inclusive=True).alias("split_inclusive"),
         ... )
         shape: (3, 4)
         ┌─────────────┬─────┬───────────────────────┬─────────────────────────┐
@@ -1887,9 +1875,7 @@ class ExprStringNameSpace:
         Examples
         --------
         >>> df = pl.DataFrame({"id": [1, 2], "text": ["123abc", "abc456"]})
-        >>> df.with_columns(
-        ...     pl.col("text").str.replace(r"abc\b", "ABC")
-        ... )  # doctest: +IGNORE_RESULT
+        >>> df.with_columns(pl.col("text").str.replace(r"abc\b", "ABC"))  # doctest: +IGNORE_RESULT
         shape: (2, 2)
         ┌─────┬────────┐
         │ id  ┆ text   │

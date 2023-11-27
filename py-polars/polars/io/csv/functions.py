@@ -550,7 +550,6 @@ def read_csv_batched(
     >>> batches = reader.next_batches(5)  # doctest: +SKIP
     >>> for df in batches:  # doctest: +SKIP
     ...     print(df)
-    ...
 
     Read big CSV file in batches and write a CSV file for each "group" of interest.
 
@@ -571,7 +570,6 @@ def read_csv_batched(
     ...         seen_groups.add(group)
     ...
     ...     batches = reader.next_batches(100)
-    ...
 
     """
     projection, columns = handle_projection_columns(columns)
@@ -838,9 +836,7 @@ def scan_csv(
     >>>
     >>> (
     ...     pl.scan_csv("my_long_file.csv")  # lazy, doesn't do a thing
-    ...     .select(
-    ...         ["a", "c"]
-    ...     )  # select only 2 columns (other columns will not be read)
+    ...     .select(["a", "c"])  # select only 2 columns (other columns will not be read)
     ...     .filter(
     ...         pl.col("a") > 10
     ...     )  # the filter is pushed down the scan, so less data is read into memory
@@ -849,9 +845,7 @@ def scan_csv(
 
     We can use `with_column_names` to modify the header before scanning:
 
-    >>> df = pl.DataFrame(
-    ...     {"BrEeZaH": [1, 2, 3, 4], "LaNgUaGe": ["is", "hard", "to", "read"]}
-    ... )
+    >>> df = pl.DataFrame({"BrEeZaH": [1, 2, 3, 4], "LaNgUaGe": ["is", "hard", "to", "read"]})
     >>> path: pathlib.Path = dirpath / "mydf.csv"
     >>> df.write_csv(path)
     >>> pl.scan_csv(

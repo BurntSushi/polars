@@ -91,9 +91,7 @@ class ExprNameNameSpace:
         ...         "B_reverse": ["z", "y", "x"],
         ...     }
         ... )
-        >>> df.with_columns(
-        ...     pl.all().reverse().name.map(lambda c: c.rstrip("_reverse").lower())
-        ... )
+        >>> df.with_columns(pl.all().reverse().name.map(lambda c: c.rstrip("_reverse").lower()))
         shape: (3, 4)
         ┌───────────┬───────────┬─────┬─────┐
         │ A_reverse ┆ B_reverse ┆ a   ┆ b   │
